@@ -62,7 +62,7 @@ def organize_movies(local_movie_directoy, organized_movie_directory, movie_name,
         if not os.path.isdir(move_to):
             os.mkdir(move_to)
         else:
-            print "Error: {0} exists but it's not a directory"
+            print "Error: {0} exists but it's not a directory".format(move_to)
 
     # now move the movie to the new genre
     destination = os.path.join(move_to, movie_name)
