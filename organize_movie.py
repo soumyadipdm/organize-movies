@@ -6,6 +6,7 @@ the imdb specified genre
 
 import os
 import os.path
+import argparse
 
 import imdb
 
@@ -70,18 +71,20 @@ def organize_movies(local_movie_directoy, organized_movie_directory, movie_name,
 
 def main():
     '''main function, does all the work'''
-    local_movie_directoy = '/media/sf_New_Movies/Hollywood'
-    organized_movie_directory = '/media/sf_New_Movies/Categorized/Hollywood'
+    parser = argparse.ArgumentParser(description='A script to organize movies per genre')
+    parser.add_argument('movie_dir', help='Existing directory full of uncategoried movies')
+    parser.add_argument('new_dir', help='New directory for movies to be put into')
+    args = parser.parse_args()
 
-    #count = 1
+    local_movie_directoy = args.movie_dir
+    organized_movie_directory = args.new_dir
+
     for movie_name in list_movies(local_movie_directoy):
-        #if count == 5:
-        #    break
-        #count += 1
         try:
             genre = get_genre(movie_name)
-        except:
-            continue
+        except Exception:
+            continue  # no matter what, we did not get the genre
+
         organize_movies(local_movie_directoy, organized_movie_directory, movie_name, genre)
         move_from = os.path.join(local_movie_directoy, movie_name)
         move_to = os.path.join(organized_movie_directory, genre, movie_name)
